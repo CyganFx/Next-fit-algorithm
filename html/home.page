@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+    <title>Algorithms</title>
+</head>
+<body>
+<h2>Choose what operation to do</h2>
+<form action="/doTask" method="POST">
+    <label>Operation #1 that takes 420 KB</label>
+    <input type="radio" name="task" value="1">
+    <label>Operation #2 that takes 460 KB</label>
+    <input type="radio" name="task" value="2">
+    <label>Operation #3 that takes 470 KB</label>
+    <input type="radio" name="task" value="3">
+    <input type="submit" value="Do">
+</form>
+<h2>System Memory:</h2>
+{{if .MemoryBlocks}}
+    <table>
+        <tr>
+            <th>Memory Block ID</th>
+            <th>Free Memory Left</th>
+            <th>Description</th>
+        </tr>
+        {{range .MemoryBlocks}}
+            <tr>
+                <td>#{{.Id}}</td>
+                <td>{{.FreeMemoryLeft}} KB</td>
+                <td>{{.Description}}</td>
+            </tr>
+        {{end}}
+    </table>
+{{else}}
+    <p>There's nothing to see here... yet!</p>
+{{end}}
+</body>
+</html>
