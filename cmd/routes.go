@@ -12,6 +12,8 @@ func (app *application) routes() http.Handler {
 	postRouter := r.Methods("POST").Subrouter()
 
 	getRouter.HandleFunc("/", app.home)
+	getRouter.HandleFunc("/LRU", app.LRUHome)
 	postRouter.HandleFunc("/doTask", app.doTask)
+	postRouter.HandleFunc("/LRU/doLRU", app.doLRU)
 	return r
 }

@@ -9,8 +9,9 @@ import (
 )
 
 type application struct {
-	infoLog    *log.Logger
-	CacheTable *domain.CacheTable
+	infoLog      *log.Logger
+	cacheData    *domain.CacheData
+	lruCacheData *domain.LRUCacheData
 }
 
 func main() {
@@ -18,7 +19,7 @@ func main() {
 	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
 	app := &application{
 		infoLog: infoLog,
-		CacheTable: &domain.CacheTable{
+		cacheData: &domain.CacheData{
 			MemoryBlocks: []*domain.MemoryBlock{
 				{
 					Id:             1,
@@ -56,6 +57,11 @@ func main() {
 					Description:    "Doing some operation",
 				},
 			},
+		},
+		lruCacheData: &domain.LRUCacheData{
+			CurrentMemoryData: "nothing",
+			PageFaults:        0,
+			PageHits:          0,
 		},
 	}
 

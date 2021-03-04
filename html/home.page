@@ -1,9 +1,4 @@
-<!doctype html>
-<html lang='en'>
-<head>
-    <meta charset='utf-8'>
-    <title>Algorithms</title>
-</head>
+{{template "header" .}}
 <body>
 <h2>Choose what operation to do</h2>
 <form action="/doTask" method="POST">
@@ -13,6 +8,7 @@
     <input type="radio" name="task" value="2">
     <label>Operation #3 that takes 470 KB</label>
     <input type="radio" name="task" value="3">
+    <br />
     <input type="submit" value="Do">
 </form>
 <h2>System Memory:</h2>
@@ -34,5 +30,8 @@
 {{else}}
     <p>There's nothing to see here... yet!</p>
 {{end}}
+
+<br /><hr /><br />
+<a href="/LRU">LRU Algorithm</a>
 </body>
 </html>

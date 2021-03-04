@@ -1,0 +1,23 @@
+{{template "header" .}}
+<body>
+<h2>LRU Caching</h2>
+<form action="/LRU/doLRU" method="POST">
+    <label>Capacity: </label>
+    <input type="number" name="capacity"> <br/>
+    <label>Type array of data like: 7 0 1 2 0 3 0 4 2 3 0 3 2 </label>
+    <input type="text" name="processList" placeholder="1 2 3 4">
+    <br />
+    <input type="submit" value="Do">
+</form>
+<h2>System cache:</h2>
+<label>currentMemoryData: </label> <br />
+{{ .CurrentMemoryData}} <br />
+<label>Page Fauls: </label> <br />
+{{ .PageFaults}} <br />
+<label>Page Hits: </label> <br />
+{{ .PageHits}}
+
+<br /><hr /><br />
+<a href="/">Next Fit Algorithm</a>
+</body>
+</html>
