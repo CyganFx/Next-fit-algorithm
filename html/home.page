@@ -31,7 +31,10 @@
     <p>There's nothing to see here... yet!</p>
 {{end}}
 
-<br /><hr /><br />
+<br />
+<h3>All info in logs!</h3>
+<hr />
+<br />
 <a href="/LRU">LRU Algorithm</a>
 </body>
 </html>
