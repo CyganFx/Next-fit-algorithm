@@ -1,7 +1,7 @@
 {{template "header" .}}
 <body>
 <h2>Choose what operation to do</h2>
-<form action="/doTask" method="POST">
+<form action="/doNextFit" method="POST">
     <label>Operation #1 that takes 420 KB</label>
     <input type="radio" name="task" value="1">
     <label>Operation #2 that takes 460 KB</label>
