@@ -13,7 +13,7 @@ func (app *application) routes() http.Handler {
 
 	getRouter.HandleFunc("/", app.home)
 	getRouter.HandleFunc("/LRU", app.LRUHome)
-	postRouter.HandleFunc("/doTask", app.doTask)
+	postRouter.HandleFunc("/doNextFit", app.doNextFit)
 	postRouter.HandleFunc("/LRU/doLRU", app.doLRU)
 	return r
 }

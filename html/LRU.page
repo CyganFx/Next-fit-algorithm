@@ -12,7 +12,7 @@
 <h2>System cache:</h2>
 <label>currentMemoryData: </label> <br />
 {{ .CurrentMemoryData}} <br />
-<label>Page Fauls: </label> <br />
+<label>Page Faults: </label> <br />
 {{ .PageFaults}} <br />
 <label>Page Hits: </label> <br />
 {{ .PageHits}}

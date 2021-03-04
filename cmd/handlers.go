@@ -25,7 +25,7 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (app *application) doTask(w http.ResponseWriter, r *http.Request) {
+func (app *application) doNextFit(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
 		fmt.Println(err)
@@ -51,12 +51,12 @@ func (app *application) doTask(w http.ResponseWriter, r *http.Request) {
 		processes = append(processes, 250, 130, 10, 80)
 	}
 
-	app.nextFit(processes, processNumber)
+	app.nextFitImpl(processes, processNumber)
 
 	app.home(w, r)
 }
 
-func (app *application) nextFit(processes []int, processNumber int) {
+func (app *application) nextFitImpl(processes []int, processNumber int) {
 	memoryBlocks := app.cacheData.MemoryBlocks
 	memoryBlockLength := len(memoryBlocks)
 	processesLength := len(processes)
@@ -115,23 +115,7 @@ func (app *application) doLRU(w http.ResponseWriter, r *http.Request) {
 	strProcessListSlice := strings.Split(strProcessList, " ")
 	processList := toIntArray(strProcessListSlice)
 
-	for _, val := range processList {
-		app.infoLog.Printf("Current memory data: %v \n page faults: %d \n page hits: %d \n next val: %d",
-			currentMemoryData, pageFaults, pageHits, val)
-		if !contains(currentMemoryData, val) {
-			if len(currentMemoryData) == capacity {
-				currentMemoryData = currentMemoryData[1:]
-				currentMemoryData = append(currentMemoryData, val)
-			} else {
-				currentMemoryData = append(currentMemoryData, val)
-			}
-			pageFaults++
-		} else {
-			currentMemoryData = removeElementFromSlice(currentMemoryData, val)
-			currentMemoryData = append(currentMemoryData, val)
-			pageHits++
-		}
-	}
+	app.lruImpl(&processList, &currentMemoryData, capacity, &pageFaults, &pageHits)
 
 	strLRUCacheDataSlice := toStringArray(currentMemoryData)
 	strLRUCacheData := strings.Join(strLRUCacheDataSlice, ",")
@@ -141,6 +125,26 @@ func (app *application) doLRU(w http.ResponseWriter, r *http.Request) {
 	app.lruCacheData.PageHits = pageHits
 
 	app.LRUHome(w, r)
+}
+
+func (app *application) lruImpl(processList *[]int, currentMemoryData *[]int, capacity int, pageFaults *int, pageHits *int) {
+	for _, val := range *processList {
+		app.infoLog.Printf("Current memory data: %v \n page faults: %d \n page hits: %d \n next val: %d",
+			currentMemoryData, pageFaults, pageHits, val)
+		if !contains(*currentMemoryData, val) {
+			if len(*currentMemoryData) == capacity {
+				*currentMemoryData = (*currentMemoryData)[1:]
+				*currentMemoryData = append(*currentMemoryData, val)
+			} else {
+				*currentMemoryData = append(*currentMemoryData, val)
+			}
+			*pageFaults++
+		} else {
+			*currentMemoryData = removeElementFromSlice(*currentMemoryData, val)
+			*currentMemoryData = append(*currentMemoryData, val)
+			*pageHits++
+		}
+	}
 }
 
 func removeElementFromSlice(s []int, value int) []int {
