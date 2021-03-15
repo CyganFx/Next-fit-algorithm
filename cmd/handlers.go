@@ -40,7 +40,7 @@ func (app *application) doNextFit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// random split of data
+	//split of data
 	if processNumber == 1 {
 		processes = append(processes, 250, 80, 40, 50)
 	}
@@ -130,7 +130,7 @@ func (app *application) doLRU(w http.ResponseWriter, r *http.Request) {
 func (app *application) lruImpl(processList *[]int, currentMemoryData *[]int, capacity int, pageFaults *int, pageHits *int) {
 	for _, val := range *processList {
 		app.infoLog.Printf("Current memory data: %v \n page faults: %d \n page hits: %d \n next val: %d",
-			currentMemoryData, pageFaults, pageHits, val)
+			*currentMemoryData, *pageFaults, *pageHits, val)
 		if !contains(*currentMemoryData, val) {
 			if len(*currentMemoryData) == capacity {
 				*currentMemoryData = (*currentMemoryData)[1:]
@@ -145,6 +145,8 @@ func (app *application) lruImpl(processList *[]int, currentMemoryData *[]int, ca
 			*pageHits++
 		}
 	}
+	app.infoLog.Printf("Current memory data: %v \n page faults: %d \n page hits: %d \n next val: %s",
+		*currentMemoryData, *pageFaults, *pageHits, "nothing")
 }
 
 func removeElementFromSlice(s []int, value int) []int {
